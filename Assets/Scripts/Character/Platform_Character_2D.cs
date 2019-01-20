@@ -18,9 +18,10 @@ public class Platform_Character_2D : MonoBehaviour {
     private bool doubleJumpEnable;
     private bool onGround;
     private bool isJumping;
+    private bool onVerticalSurface;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         // Attach the rigid body and animations to the player
         rb2d = GetComponent<Rigidbody2D>();
         animations = GetComponent<Animator>();
@@ -83,6 +84,8 @@ public class Platform_Character_2D : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Ground"))
             onGround = true;
+        else if (collision.gameObject.CompareTag("Solid_Wall"))
+            onVerticalSurface = true;
     }
     
     // Ensures that Animation booleans are associated on each update
