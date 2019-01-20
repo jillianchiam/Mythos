@@ -17,14 +17,14 @@ public class Platform_Character_2D : MonoBehaviour {
     private Animator animations;
     private bool doubleJumpEnable;
     private bool onGround;
-    private bool isIdle;
+    private bool isJumping;
 
 	// Use this for initialization
 	void Start () {
         // Attach the rigid body and animations to the player
         rb2d = GetComponent<Rigidbody2D>();
         animations = GetComponent<Animator>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -56,11 +56,13 @@ public class Platform_Character_2D : MonoBehaviour {
     {
         if (Input.GetButtonDown("Jump"))
             if (onGround || doubleJumpEnable)
-                isIdle = true;
+            {
+                isJumping = true;
+            }
 
         if (Input.GetButtonUp("Jump"))
         {
-            isIdle = false;
+            isJumping = false;
             if (onGround)
             {
                 rb2d.AddForce(Vector2.up * jumpPower);
@@ -75,19 +77,19 @@ public class Platform_Character_2D : MonoBehaviour {
             }
         }
     }
-
+    
     // Checks whether player is touching ground or not
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
             onGround = true;
     }
-
+    
     // Ensures that Animation booleans are associated on each update
     void RunAnimations()
     {
         animations.SetFloat("Movement", Mathf.Abs(moveHorizontal));
-        animations.SetBool("IsIdle", isIdle);
+        animations.SetBool("IsJumping", isJumping);
         animations.SetBool("OnGround", onGround);
     }
 }
