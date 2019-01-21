@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Character_Moveset : MonoBehaviour {
     public Rigidbody2D banana;
+    public float bananaGravityImpact = 0f;
     public float bananaSpeed = 10f;
+    public float xOffset = 0.59f;
+    public float yOffset = 0.72f;
 
     private Vector2 facingDirection = Vector2.zero;
 
     // Use this for initialization
     void Start () {
-		
+        banana.gravityScale = bananaGravityImpact;
 	}
 	
 	// Update is called once per frame
@@ -33,11 +36,17 @@ public class Character_Moveset : MonoBehaviour {
 
     void FireBanana()
     {
-        var bananaInst = Instantiate(banana, transform.position, Quaternion.Euler(new Vector2(0, 0)));
-
+        // Fire banana in direction that player is currently facing
         if (facingDirection.x < 0)
+        {
+            var bananaInst = Instantiate(banana, new Vector2(transform.position.x - xOffset, transform.position.y + yOffset), Quaternion.Euler(new Vector2(0, 0)));
             bananaInst.velocity = new Vector2(-bananaSpeed, 0);
+        }
         else
+        {
+            var bananaInst = Instantiate(banana, new Vector2(transform.position.x + xOffset, transform.position.y + yOffset), Quaternion.Euler(new Vector2(0, 0)));
             bananaInst.velocity = new Vector2(bananaSpeed, 0);
+        }
+            
     }
 }
