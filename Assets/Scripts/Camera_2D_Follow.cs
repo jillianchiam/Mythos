@@ -9,6 +9,7 @@ public class Camera_2D_Follow : MonoBehaviour {
     public float lookAheadFactor = 3;
     public float lookAheadReturnSpeed = 0.5f;
     public float lookAheadMoveThreshold = 0.1f;
+    public float yOffset = 0f;
 
     float offsetZ;
     Vector3 lastTargetPosition;
@@ -25,7 +26,7 @@ public class Camera_2D_Follow : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // only update look ahead position if accelerating or changed direction
-        float xMoveDelta = (target.position - lastTargetPosition).x;
+        float xMoveDelta = (target.position + lastTargetPosition).x;
 
         bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
 
