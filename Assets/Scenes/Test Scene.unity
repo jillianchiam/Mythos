@@ -729,10 +729,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   banana: {fileID: 50989810272019288, guid: c4a69a4bdf91cd14ab100fce47c5bdb0, type: 2}
-  bananaGravityImpact: 0.5
+  bananaGravityImpact: 0
   bananaSpeed: 20
   xOffset: 0.59
   yOffset: 0.72
+  deathTime: 1
 --- !u!1 &1531492892
 GameObject:
   m_ObjectHideFlags: 0

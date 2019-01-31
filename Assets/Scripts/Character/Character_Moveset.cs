@@ -8,12 +8,14 @@ public class Character_Moveset : MonoBehaviour {
     public float bananaSpeed = 10f;
     public float xOffset = 0.59f;
     public float yOffset = 0.72f;
+    public float deathTime = 1.0f;
 
     private Vector2 facingDirection = Vector2.zero;
 
     // Use this for initialization
     void Start () {
         banana.gravityScale = bananaGravityImpact;
+        // banana.deathTime = deathTime;
 	}
 	
 	// Update is called once per frame
