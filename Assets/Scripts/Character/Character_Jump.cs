@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Character_Jump : MonoBehaviour {
 
-    // Jump mechanic twaeking variables
-    public float jumpVelocity = 1000f;
-    public float wallJumpPushVelocity = 10f;
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
+    // Jump mechanic tweeking variables
+    [SerializeField] private float jumpVelocity = 1000f;
+    [SerializeField] private float wallJumpPushVelocity = 10f;
+    [SerializeField] private float fallMultiplier = 2.5f;
+    [SerializeField] private float lowJumpMultiplier = 2f;
 
     // Conditional Statements for animations
     private bool onGround;

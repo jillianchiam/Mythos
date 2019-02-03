@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character_Moveset : MonoBehaviour {
-    public Rigidbody2D banana;
-    public float bananaGravityImpact = 0f;
-    public float bananaSpeed = 10f;
-    public float xOffset = 0.59f;
-    public float yOffset = 0.72f;
-    public float deathTime = 1.0f;
+    [SerializeField] private Rigidbody2D banana;
+    [SerializeField] private float bananaGravityImpact = 0f;
+    [SerializeField] private float bananaSpeed = 10f;
+    [SerializeField] private float xOffset = 0.59f;
+    [SerializeField] private float yOffset = 0.72f;
+    [SerializeField] private float deathTime = 1.0f;
 
     private Vector2 facingDirection = Vector2.zero;
 
     // Use this for initialization
     void Start () {
         banana.gravityScale = bananaGravityImpact;
-        // banana.deathTime = deathTime;
 	}
 	
 	// Update is called once per frame

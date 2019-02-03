@@ -8,7 +8,7 @@ using System;
 public class Platform_Character_2D : MonoBehaviour {
 
     // Player Movement fields
-    public float speed;
+    [SerializeField] private float speed;
     private float moveHorizontal;
     private Rigidbody2D rb2d;
 
