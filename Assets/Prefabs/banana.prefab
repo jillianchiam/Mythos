@@ -75,7 +75,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 1
   bananaVelocity: 30
-  player: {fileID: 0}
 --- !u!212 &212103810475083516
 SpriteRenderer:
   m_ObjectHideFlags: 1

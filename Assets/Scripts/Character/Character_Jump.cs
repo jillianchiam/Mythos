@@ -19,6 +19,7 @@ public class Character_Jump : MonoBehaviour {
     private bool wallJumpAllowed;
     private bool doubleJumpEnable;
     private bool verticalJumpAllowed;
+    private bool applyingWallJump = false;
 
     // Character objects
     private Animator animations;
@@ -35,6 +36,9 @@ public class Character_Jump : MonoBehaviour {
 	void Update () {
         ApplyAnimations();
         JumpMechanics();
+
+        if (wallJumpAllowed)
+            Invoke("SetWallJumpFalse", 0.3f);
     }
 
     // Updates booleans to allow proper jump type
@@ -81,12 +85,16 @@ public class Character_Jump : MonoBehaviour {
         }
         else if (wallJumpAllowed)
         {
-            rb2d.velocity = new Vector2(0, 0);
-            rb2d.AddForce(Vector2.up * jumpVelocity);
-            rb2d.AddForce(Vector2.left * wallJumpPushVelocity);
+            if (!applyingWallJump)
+            {
+                rb2d.AddForce(Vector2.up * jumpVelocity);
+                applyingWallJump = true;
+            }
+            rb2d.AddForce(Vector2.left * wallJumpPushVelocity, ForceMode2D.Impulse);
+            if (rb2d.velocity.x > -0.2)
+                wallJumpAllowed = false;
         }
         verticalJumpAllowed = false;
-        wallJumpAllowed = false;
 
         // Conditions below apply faster falling to reduce floaty feeling
 
@@ -117,5 +125,11 @@ public class Character_Jump : MonoBehaviour {
     {
         animations.SetBool("IsJumping", isJumping);
         animations.SetBool("OnGround", onGround);
+    }
+
+    void SetWallJumpFalse()
+    {
+        wallJumpAllowed = false;
+        applyingWallJump = false;
     }
 }

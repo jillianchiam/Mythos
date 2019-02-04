@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpVelocity: 1500
-  wallJumpPushVelocity: 1000
+  wallJumpPushVelocity: 10
   fallMultiplier: 600
   lowJumpMultiplier: 300
 --- !u!95 &1282123607
