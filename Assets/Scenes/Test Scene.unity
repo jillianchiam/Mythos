@@ -562,6 +562,7 @@ GameObject:
   - component: {fileID: 1282123610}
   - component: {fileID: 1282123605}
   - component: {fileID: 1282123612}
+  - component: {fileID: 1282123604}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -569,6 +570,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1282123604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1282123603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cfe9fc22696524d80476a97c6fa09c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xOffset: 0.59
+  yOffset: 0.72
 --- !u!50 &1282123605
 Rigidbody2D:
   serializedVersion: 4
@@ -701,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   jumpVelocity: 1500
-  wallJumpPushVelocity: 10
+  wallJumpPushVelocity: 100
   fallMultiplier: 600
   lowJumpMultiplier: 300
 --- !u!1 &1531492892
