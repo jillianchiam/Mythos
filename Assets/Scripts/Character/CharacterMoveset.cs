@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character_Moveset : MonoBehaviour {
+public class CharacterMoveset : MonoBehaviour {
     [SerializeField] private float xOffset = 0.59f;
     [SerializeField] private float yOffset = 0.72f;
 
