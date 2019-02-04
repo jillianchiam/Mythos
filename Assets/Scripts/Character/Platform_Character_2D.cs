@@ -12,6 +12,8 @@ public class Platform_Character_2D : MonoBehaviour {
     private float moveHorizontal;
     private Rigidbody2D rb2d;
 
+    public static Platform_Character_2D current;
+
     // Animation related fields
     private Animator animations;
 

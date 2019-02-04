@@ -3,51 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Character_Moveset : MonoBehaviour {
-    [SerializeField] private Rigidbody2D banana;
-    [SerializeField] private float bananaGravityImpact = 0f;
-    [SerializeField] private float bananaSpeed = 10f;
     [SerializeField] private float xOffset = 0.59f;
     [SerializeField] private float yOffset = 0.72f;
-    [SerializeField] private float deathTime = 1.0f;
 
-    private Vector2 facingDirection = Vector2.zero;
-
-    // Use this for initialization
     void Start () {
-        banana.gravityScale = bananaGravityImpact;
-	}
+        //rb2d = GetComponent<Rigidbody2D>();                                                                               // Can use in other functions if recoil effect on character is desired
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Fire1"))
-            FireBanana();
+        if (Input.GetButtonDown("Fire1"))                                                                                   // If key is pressed execute code to fire a projectile
+            FireProjectile();
     }
 
-    void FixedUpdate()
+    void FireProjectile()
     {
-        Vector2 directionVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        GameObject projectile = Pooler.sharedInstance.GetPooledObject();                                                    // Get one of the objects from the object pool
+        if (projectile == null) return;                                                                                     // No objects left to activate so return nothing
 
-        // Update the player direction when movement is present
-        if (directionVector != Vector2.zero)
-        {
-            facingDirection = directionVector;
-            facingDirection.Normalize();
-        }
-    }
-
-    void FireBanana()
-    {
         // Fire banana in direction that player is currently facing
-        if (facingDirection.x < 0)
+        if (transform.localScale.x == -1f)                                                                                  // Player facing left
         {
-            var bananaInst = Instantiate(banana, new Vector2(transform.position.x - xOffset, transform.position.y + yOffset), Quaternion.Euler(new Vector2(0, 0)));
-            bananaInst.velocity = new Vector2(-bananaSpeed, 0);
+            projectile.transform.position = new Vector2(transform.position.x - xOffset, transform.position.y + yOffset);    // Set proper spawn location Which is players current with any specified offsets          
         }
-        else
+        else                                                                                                                // Player facing right
         {
-            var bananaInst = Instantiate(banana, new Vector2(transform.position.x + xOffset, transform.position.y + yOffset), Quaternion.Euler(new Vector2(0, 0)));
-            bananaInst.velocity = new Vector2(bananaSpeed, 0);
+            projectile.transform.position = new Vector2(transform.position.x + xOffset, transform.position.y + yOffset);    // Set proper spawn location Which is players current with any specified offsets
         }
-            
+
+        projectile.SetActive(true);                                                                                         // Set state to active so that projectile appears on screen
     }
 }

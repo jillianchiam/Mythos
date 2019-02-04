@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4903027735470300}
   - component: {fileID: 212103810475083516}
-  - component: {fileID: 114268744525197248}
   - component: {fileID: 50989810272019288}
+  - component: {fileID: 114781182440341916}
   m_Layer: 0
   m_Name: banana
   m_TagString: Untagged
@@ -62,7 +62,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &114268744525197248
+--- !u!114 &114781182440341916
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -70,10 +70,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1037489913090026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c0137a55a6b6ee41b2ad0696322a682, type: 3}
+  m_Script: {fileID: 11500000, guid: 564d8f6a7f2ebe441bd2168527776d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathTime: 1
+  activeTime: 1
+  bananaVelocity: 30
+  player: {fileID: 0}
 --- !u!212 &212103810475083516
 SpriteRenderer:
   m_ObjectHideFlags: 1
