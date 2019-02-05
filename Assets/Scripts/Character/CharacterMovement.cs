@@ -10,9 +10,12 @@ public class CharacterMovement : MonoBehaviour {
 
     // Jump mechanic tweeking variables
     [SerializeField] private float jumpVelocity = 1500f;
-    [SerializeField] private float wallJumpPushVelocity = 10f;
+    [SerializeField] private float wallJumpPushVelocity = 15f;
     [SerializeField] private float fallMultiplier = 600f;
     [SerializeField] private float lowJumpMultiplier = 300f;
+    [SerializeField] private float xWallDampingFactor = 100f;
+
+    private float gravity;
 
     // Conditional Statements for animations
     private bool onGround;
@@ -24,78 +27,77 @@ public class CharacterMovement : MonoBehaviour {
     private bool doubleJumpEnable;
     private bool verticalJumpAllowed;
     private bool applyingWallJump = false;
+    private bool horizontalControl = true;
 
     // GameObject related fields
     private Animator animations;
     private Rigidbody2D rb2d;
 
-    // Use this for initialization
-    void Start()
+    // Class initialization function
+    void Start()                                                                        
     {
-        // Attach the rigid body and animations to the player
-        rb2d = GetComponent<Rigidbody2D>();
-        animations = GetComponent<Animator>();
+        rb2d = GetComponent<Rigidbody2D>();                                             // Attach the rigid body to the player
+        animations = GetComponent<Animator>();                                          // Attach the animations to the player
+        gravity = Physics2D.gravity.y;                                                  // Set gravity to physics engine gravity constant
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update()                                                                       // Update is called once per frame
     {
+        SetSpriteDirection();                                                           // Set sprite direction based on input
         RunAnimations();                                                                // Update animation booleans
-        ApplyPlayerMovement();                                                          // Accept inputs for horizontal movement
-        JumpMechanics();
-
-        if (wallJumpAllowed)
-            Invoke("SetWallJumpFalse", 0.3f);
+        JumpMechanics();                                                                // Update jump parameters
     }
 
     // Update called on fixed time interval
-    void FixedUpdate()
+    void FixedUpdate()                                                                  
     {
-        if (verticalJumpAllowed)
+        ApplyPlayerMovement();                                                          // Accept inputs for horizontal movement
+
+        if (verticalJumpAllowed)                                                        // If jump input and either on ground or double jump enabled
         {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-            rb2d.AddForce(Vector2.up * jumpVelocity);
+            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);                            // Zero the y velocity before adding upward force
+            rb2d.AddForce(Vector2.up * jumpVelocity);                                   // Add upwards force for jump on character
         }
-        else if (wallJumpAllowed)
+        else if (wallJumpAllowed)                                                       // Off ground and currently on a wall
         {
-            if (!applyingWallJump)
+            wallJumpAllowed = false;                                                    // Moving off wall so disable wall jump
+            horizontalControl = false;                                                  // Disable user horizontal control
+
+            Invoke("ReEnableHorizontalControl", 0.3f);                                  // Re enable horizontal control after set time
+
+            rb2d.velocity = new Vector2(0, 0);                                          // Zero velocity so that wall jump has specific vector value
+            rb2d.AddForce(Vector2.up * jumpVelocity);                                   // Apply vertical force for jump
+
+            if (transform.localScale.x == -1f)                                          // If wall is on left side of character
             {
-                rb2d.AddForce(Vector2.up * jumpVelocity);
-                applyingWallJump = true;
+                rb2d.AddForce(Vector2.right * wallJumpPushVelocity);                    // Apply force to send right
+                transform.localScale = new Vector3(1, 1, 1);                            // Flip sprite to match movement
             }
-            rb2d.AddForce(Vector2.left * wallJumpPushVelocity, ForceMode2D.Impulse);
-            if (rb2d.velocity.x > -0.2)
-                wallJumpAllowed = false;
+            else                                                                        // If wall is on right side of character
+            {
+                rb2d.AddForce(Vector2.left * wallJumpPushVelocity);                     // Apply force to send left
+                transform.localScale = new Vector3(-1, 1, 1);                           // Flip sprite to match movement
+            }
         }
-        verticalJumpAllowed = false;
+        
+        verticalJumpAllowed = false;                                                    // Jump applied so set back to false
 
-        // Conditions below apply faster falling to reduce floaty feeling
-
-        // Check if falling and in air
-        if (rb2d.velocity.y < 0 && !onGround)
-            rb2d.AddForce(Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime); // fallMultiplier - 1 accounts for physics systems normal gravity
-        // Check if jump has been let go while in air
-        else if (rb2d.velocity.y > 0 && !Input.GetButton("Jump") && !onGround)
-            rb2d.AddForce(Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime);
-    }
-
-    // Sets all physical collision flags
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!horizontalControl && (rb2d.velocity.x * transform.localScale.x) > speed)   // If wall jump in effect and character is moving faster than walking speed
         {
-            onGround = true;
-            onVerticalSurface = false;
+            if (transform.localScale.x == -1f)
+                rb2d.AddForce(Vector2.right * (xWallDampingFactor) * Time.deltaTime);   // Apply a greater downwards force to decrease rise faster
+            else
+                rb2d.AddForce(Vector2.left * (xWallDampingFactor) * Time.deltaTime);    // Apply a greater downwards force to decrease rise faster
         }
-        else if (collision.gameObject.CompareTag("Solid_Wall"))
-        {
-            onVerticalSurface = true;
-            onGround = false;
-        }
-    }
 
+        if (rb2d.velocity.y < 0 && !onGround)                                           // Check if falling and airborne
+            rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);    // Apply greater froce to reduce floaty feeling
+        else if (rb2d.velocity.y > 0 && !Input.GetButton("Jump") && !onGround)          // Check if jump has been let go
+            rb2d.AddForce(Vector2.up * gravity * (lowJumpMultiplier) * Time.deltaTime); // Apply a greater downwards force to decrease rise faster
+    }
+    
     // Updates booleans to allow proper jump type
-    void JumpMechanics()
+    void JumpMechanics()                                                                
     {
         // Update condition for proper animation transition
         if (Input.GetButtonDown("Jump") && (onGround || doubleJumpEnable))
@@ -104,24 +106,21 @@ public class CharacterMovement : MonoBehaviour {
         if (Input.GetButtonDown("Jump"))
         {
             isJumping = false;
-
-            // If player is grounded apply character jump
-            if (onGround)
+            
+            if (onGround)                                                               // If player is grounded apply character jump
             {
                 onGround = false;
                 doubleJumpEnable = true;
                 verticalJumpAllowed = true;
             }
-            // If player is on a vertical surface a wall jump is triggered
-            else if (onVerticalSurface)
+            else if (onVerticalSurface)                                                 // If player is on a vertical surface a wall jump is triggered
             {
                 onVerticalSurface = false;
                 doubleJumpEnable = true;
                 wallJumpAllowed = true;
             }
-            // If doublejump is enabled the player may jump again
-            else if (doubleJumpEnable)
-            {
+            else if (doubleJumpEnable)                                                  // If doublejump is enabled the player may jump again
+            {   
                 doubleJumpEnable = false;
                 verticalJumpAllowed = true;
             }
@@ -129,33 +128,47 @@ public class CharacterMovement : MonoBehaviour {
     }
 
     // Change player velocity based on user input
-    void ApplyPlayerMovement()
+    void ApplyPlayerMovement()                                                          
     {
-        moveHorizontal = Input.GetAxis("Horizontal");
-        rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);
-        SetSpriteDirection();
+        moveHorizontal = Input.GetAxis("Horizontal");                                   // Get horizonatl movement direction input
+
+        if (horizontalControl && moveHorizontal != 0f)
+            rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);       // Maintain y velocity and set x velocity to user input
+
     }
 
-    // 
-    void SetWallJumpFalse()
+    // Re enables horizontal input capabilities
+    void ReEnableHorizontalControl()
     {
-        wallJumpAllowed = false;
-        applyingWallJump = false;
+        horizontalControl = true;
     }
 
     // Sets direction of player sprite
-    void SetSpriteDirection()
+    void SetSpriteDirection()                                                           
     {
-        // Face left
-        if (moveHorizontal < -.1)
+        if (moveHorizontal < -.1 && horizontalControl)
             transform.localScale = new Vector3(-1, 1, 1);                               // Make sprite face left
-        // Face right
-        else if (moveHorizontal > .1)
+        else if (moveHorizontal > .1 && horizontalControl)
             transform.localScale = new Vector3(1, 1, 1);                                // Make sprite face right
     }
 
+    // Sets all physical collision flags
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))                                  // See if character is on object with ground tag
+        {
+            onGround = true;                                                            // Character is grounded
+            onVerticalSurface = false;                                                  // Don't care about if touching wall so make false
+        }
+        else if (collision.gameObject.CompareTag("Wall"))                               // See if character is on object with wall tag
+        {
+            onVerticalSurface = true;                                                   // Character is on vertical surface
+            onGround = false;                                                           // Character is not grounded
+        }
+    }
+
     // Ensures that Animation booleans are associated on each update
-    void RunAnimations()
+    void RunAnimations()                                                                
     {
         animations.SetFloat("Movement", Mathf.Abs(moveHorizontal));
         animations.SetBool("IsJumping", isJumping);
