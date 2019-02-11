@@ -168,6 +168,18 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1124728819721464, guid: fd5cc71c921868741bce39d98b1d9e14, type: 2}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 1060550575663180, guid: fd5cc71c921868741bce39d98b1d9e14, type: 2}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 1679873911678100, guid: fd5cc71c921868741bce39d98b1d9e14, type: 2}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd5cc71c921868741bce39d98b1d9e14, type: 2}
   m_IsPrefabParent: 0

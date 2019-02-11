@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float fallMultiplier = 600f;
     [SerializeField] private float lowJumpMultiplier = 300f;
     [SerializeField] private float xWallDampingFactor = 100f;
+    [SerializeField] private float wallJumpTime = 0.15f;
 
     private float gravity;
 
@@ -61,7 +62,7 @@ public class CharacterMovement : MonoBehaviour {
             wallJumpAllowed = false;                                                    // Moving off wall so disable wall jump
             horizontalControl = false;                                                  // Disable user horizontal control
 
-            Invoke("ReEnableHorizontalControl", 0.3f);                                  // Re enable horizontal control after set time
+            Invoke("ReEnableHorizontalControl", wallJumpTime);                                  // Re enable horizontal control after set time
 
             if (transform.localScale.x == -1f)                                          // If wall is on left side of character
             {
