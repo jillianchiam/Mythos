@@ -15,7 +15,7 @@ public class DoorTransport : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isStanding) {
-			if (Input.GetMouseButtonDown (0)) {
+			if (Input.GetButtonDown("Jump")) {
 				if (SceneManager.GetActiveScene ().name == "Level2")
 					Application.LoadLevel ("Test Scene");
 				if (SceneManager.GetActiveScene ().name == "Test Scene")
@@ -26,7 +26,7 @@ public class DoorTransport : MonoBehaviour {
 		
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Player") {
+		if (other.gameObject.tag == "Body") {
 			isStanding = true;
 		}
 	}
