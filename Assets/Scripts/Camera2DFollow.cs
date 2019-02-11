@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera_2D_Follow : MonoBehaviour {
-
+public class Camera2DFollow : MonoBehaviour
+{
     public Transform target;
     public float damping = 1;
     public float lookAheadFactor = 3;
@@ -21,10 +21,13 @@ public class Camera_2D_Follow : MonoBehaviour {
         lastTargetPosition = target.position;
         offsetZ = (transform.position - target.position).z;
         transform.parent = null;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+        transform.position = new Vector3(target.position.x, target.position.y + yOffset, -10);
+/*
         // only update look ahead position if accelerating or changed direction
         float xMoveDelta = (target.position + lastTargetPosition).x;
 
@@ -40,6 +43,7 @@ public class Camera_2D_Follow : MonoBehaviour {
 
         transform.position = newPos;
         lastTargetPosition = target.position;
-        
-	}
+        */
+    }
 }
+

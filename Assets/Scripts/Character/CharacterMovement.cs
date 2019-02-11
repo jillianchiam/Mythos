@@ -10,7 +10,6 @@ public class CharacterMovement : MonoBehaviour {
 
     // Jump mechanic tweeking variables
     [SerializeField] private float jumpVelocity = 1500f;
-    [SerializeField] private float wallJumpPushVelocity = 15f;
     [SerializeField] private float fallMultiplier = 600f;
     [SerializeField] private float lowJumpMultiplier = 300f;
     [SerializeField] private float xWallDampingFactor = 100f;
@@ -18,15 +17,14 @@ public class CharacterMovement : MonoBehaviour {
     private float gravity;
 
     // Conditional Statements for animations
-    private bool onGround;
+    public bool onGround;
     private bool isJumping;
-    private bool onVerticalSurface;
+    public bool onVerticalSurface;
 
     // Conditional statements for mechanics
     private bool wallJumpAllowed;
     private bool doubleJumpEnable;
     private bool verticalJumpAllowed;
-    private bool applyingWallJump = false;
     private bool horizontalControl = true;
 
     // GameObject related fields
@@ -65,19 +63,18 @@ public class CharacterMovement : MonoBehaviour {
 
             Invoke("ReEnableHorizontalControl", 0.3f);                                  // Re enable horizontal control after set time
 
-            rb2d.velocity = new Vector2(0, 0);                                          // Zero velocity so that wall jump has specific vector value
-            rb2d.AddForce(Vector2.up * jumpVelocity);                                   // Apply vertical force for jump
-
             if (transform.localScale.x == -1f)                                          // If wall is on left side of character
             {
-                rb2d.AddForce(Vector2.right * wallJumpPushVelocity);                    // Apply force to send right
                 transform.localScale = new Vector3(1, 1, 1);                            // Flip sprite to match movement
+                rb2d.velocity = new Vector2(transform.localScale.x * speed, 0);         // Apply velocity to send right
             }
             else                                                                        // If wall is on right side of character
             {
-                rb2d.AddForce(Vector2.left * wallJumpPushVelocity);                     // Apply force to send left
-                transform.localScale = new Vector3(-1, 1, 1);                           // Flip sprite to match movement
+                transform.localScale = new Vector3(-1, 1, 1);                            // Flip sprite to match movement
+                rb2d.velocity = new Vector2(transform.localScale.x * speed, 0);         // Apply velocity to send left
             }
+
+            rb2d.AddForce(Vector2.up * jumpVelocity);                                   // Apply vertical force for jump
         }
         
         verticalJumpAllowed = false;                                                    // Jump applied so set back to false
@@ -150,21 +147,6 @@ public class CharacterMovement : MonoBehaviour {
             transform.localScale = new Vector3(-1, 1, 1);                               // Make sprite face left
         else if (moveHorizontal > .1 && horizontalControl)
             transform.localScale = new Vector3(1, 1, 1);                                // Make sprite face right
-    }
-
-    // Sets all physical collision flags
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))                                  // See if character is on object with ground tag
-        {
-            onGround = true;                                                            // Character is grounded
-            onVerticalSurface = false;                                                  // Don't care about if touching wall so make false
-        }
-        else if (collision.gameObject.CompareTag("Wall"))                               // See if character is on object with wall tag
-        {
-            onVerticalSurface = true;                                                   // Character is on vertical surface
-            onGround = false;                                                           // Character is not grounded
-        }
     }
 
     // Ensures that Animation booleans are associated on each update
