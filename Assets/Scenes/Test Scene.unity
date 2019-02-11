@@ -679,6 +679,17 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -2.6
       objectReference: {fileID: 0}
+    - target: {fileID: 61944277670740798, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114406414544956912, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: objectPooler
+      value: 
+      objectReference: {fileID: 1724783897917222, guid: c4a69a4bdf91cd14ab100fce47c5bdb0,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
   m_IsPrefabParent: 0
@@ -1008,12 +1019,12 @@ Prefab:
     - target: {fileID: 212868545278303958, guid: cf5164f831b4f09478fae6d123c9e6d2,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: -1104287523
+      value: 942588181
       objectReference: {fileID: 0}
     - target: {fileID: 212868545278303958, guid: cf5164f831b4f09478fae6d123c9e6d2,
         type: 2}
       propertyPath: m_SortingLayer
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cf5164f831b4f09478fae6d123c9e6d2, type: 2}

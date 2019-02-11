@@ -15,7 +15,7 @@ public class DoorTransport : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isStanding) {
-			if (Input.GetButtonDown("Jump")) {
+			if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump")) {
 				if (SceneManager.GetActiveScene ().name == "Level2")
 					Application.LoadLevel ("Test Scene");
 				if (SceneManager.GetActiveScene ().name == "Test Scene")
