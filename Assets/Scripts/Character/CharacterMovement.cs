@@ -14,13 +14,14 @@ public class CharacterMovement : MonoBehaviour {
     [SerializeField] private float lowJumpMultiplier = 300f;
     [SerializeField] private float xWallDampingFactor = 100f;
     [SerializeField] private float wallJumpTime = 0.15f;
+    [SerializeField] private float wallSlideSpeed = 1f;
 
     private float gravity;
 
     // Conditional Statements for animations
     public bool onGround;
-    private bool isJumping;
     public bool onVerticalSurface;
+    private bool isJumping;
 
     // Conditional statements for mechanics
     private bool wallJumpAllowed;
@@ -40,7 +41,8 @@ public class CharacterMovement : MonoBehaviour {
         gravity = Physics2D.gravity.y;                                                  // Set gravity to physics engine gravity constant
     }
 
-    void Update()                                                                       // Update is called once per frame
+    // Update is called once per frame
+    void Update()                                                                       
     {
         SetSpriteDirection();                                                           // Set sprite direction based on input
         RunAnimations();                                                                // Update animation booleans
@@ -79,6 +81,9 @@ public class CharacterMovement : MonoBehaviour {
         }
         
         verticalJumpAllowed = false;                                                    // Jump applied so set back to false
+
+        if (onVerticalSurface && !onGround)                                             // Player Sticking to wall
+            rb2d.velocity = new Vector2(rb2d.velocity.x, -(wallSlideSpeed));            // Overrides gravity acceleration when sliding on wall
 
         if (!horizontalControl && (rb2d.velocity.x * transform.localScale.x) > speed)   // If wall jump in effect and character is moving faster than walking speed
         {
@@ -131,8 +136,12 @@ public class CharacterMovement : MonoBehaviour {
         moveHorizontal = Input.GetAxis("Horizontal");                                   // Get horizonatl movement direction input
 
         if (horizontalControl && moveHorizontal != 0f)
-            rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);       // Maintain y velocity and set x velocity to user input
-
+            if (onVerticalSurface && transform.localScale.x == -1f && moveHorizontal < 0f)
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);                        // Apply no velocity to left if colliding with wall on left
+            else if (onVerticalSurface && transform.localScale.x == 1f && moveHorizontal > 0f)
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);                        // Apply no velocity to right if colliding with wall on right
+            else
+                rb2d.velocity = new Vector2(moveHorizontal * speed, rb2d.velocity.y);   // Maintain y velocity and set x velocity to user input
     }
 
     // Re enables horizontal input capabilities

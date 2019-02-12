@@ -379,6 +379,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1724783897917222, guid: c4a69a4bdf91cd14ab100fce47c5bdb0,
         type: 2}
+    - target: {fileID: 114967448861154100, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: wallSlideSpeed
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
   m_IsPrefabParent: 0
@@ -2395,7 +2400,7 @@ Tilemap:
   m_TileColorArray:
   - m_RefCount: 154
     m_Data: {r: 1, g: 1, b: 1, a: 1}
-  m_AnimationFrameRate: 60
+  m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -17, y: -5, z: 0}
   m_Size: {x: 33, y: 15, z: 1}
