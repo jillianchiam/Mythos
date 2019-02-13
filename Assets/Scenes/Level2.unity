@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 189936000}
   - component: {fileID: 189936002}
   - component: {fileID: 189936001}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: parallax-forest-lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
