@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Wall
+  - Solid_Wall
+  - PickUp
   layers:
   - Default
   - TransparentFX
@@ -45,6 +47,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 942588181
+    locked: 0
+  - name: Middleground
+    uniqueID: 931871285
     locked: 0
   - name: Player
     uniqueID: 3190679773

@@ -15,18 +15,18 @@ public class DoorTransport : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isStanding) {
-			if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Jump")) {
-				if (SceneManager.GetActiveScene ().name == "Level2")
-					Application.LoadLevel ("Test Scene");
-				if (SceneManager.GetActiveScene ().name == "Test Scene")
-					Application.LoadLevel ("Level2");
-			}
+			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.W)) {
+				if (SceneManager.GetActiveScene().name == "Level2")
+					SceneManager.LoadSceneAsync("EnemyScene");
+				if (SceneManager.GetActiveScene().name == "EnemyScene")
+                    SceneManager.LoadSceneAsync("Level2");
+            }
 		}
 	}
 		
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.tag == "Body") {
+		if (other.gameObject.tag == "Player") {
 			isStanding = true;
 		}
 	}

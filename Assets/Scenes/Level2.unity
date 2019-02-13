@@ -180,6 +180,16 @@ Prefab:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 212625843243699190, guid: fd5cc71c921868741bce39d98b1d9e14,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: 931871285
+      objectReference: {fileID: 0}
+    - target: {fileID: 212625843243699190, guid: fd5cc71c921868741bce39d98b1d9e14,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd5cc71c921868741bce39d98b1d9e14, type: 2}
   m_IsPrefabParent: 0
@@ -220,20 +230,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4875671821380998, guid: cf5164f831b4f09478fae6d123c9e6d2, type: 2}
       propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1761235424747428, guid: cf5164f831b4f09478fae6d123c9e6d2, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 212868545278303958, guid: cf5164f831b4f09478fae6d123c9e6d2,
-        type: 2}
-      propertyPath: m_SortingLayerID
-      value: -1104287523
-      objectReference: {fileID: 0}
-    - target: {fileID: 212868545278303958, guid: cf5164f831b4f09478fae6d123c9e6d2,
-        type: 2}
-      propertyPath: m_SortingLayer
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -316,7 +312,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1104287523
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cc91606b544d1a346ae4111c1dd117dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -361,11 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1996459828}
-  damping: 0
-  lookAheadFactor: 7
-  lookAheadReturnSpeed: 0.5
-  lookAheadMoveThreshold: 0.1
-  yOffset: 0
+  yOffset: 2
 --- !u!81 &875384509
 AudioListener:
   m_ObjectHideFlags: 0
@@ -483,6 +475,14 @@ Prefab:
       value: 
       objectReference: {fileID: 1724783897917222, guid: c4a69a4bdf91cd14ab100fce47c5bdb0,
         type: 2}
+    - target: {fileID: 1810892576838112, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1286329474611546, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
   m_IsPrefabParent: 0
