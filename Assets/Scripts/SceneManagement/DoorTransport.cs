@@ -7,6 +7,8 @@ public class DoorTransport : MonoBehaviour {
 
 	private bool isStanding;
 
+    [SerializeField] private Transform target;
+
 	// Use this for initialization
 	void Start () {
 		isStanding = false;
@@ -17,9 +19,17 @@ public class DoorTransport : MonoBehaviour {
 		if (isStanding) {
 			if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.W)) {
 				if (SceneManager.GetActiveScene().name == "Level2")
-					SceneManager.LoadSceneAsync("EnemyScene");
+                {
+                    //target.position = new Vector3(-11.7f, -12.7f, 0);           // IDEA 2
+                    //DontDestroyOnLoad(target.gameObject);                       // IDEA 2
+                    SceneManager.LoadSceneAsync("EnemyScene");
+                }	
 				if (SceneManager.GetActiveScene().name == "EnemyScene")
+                {
+                    //target.position = new Vector3(20.07f, -2.35f, 0);           // IDEA 2
+                    //DontDestroyOnLoad(target.gameObject);                       // IDEA 2
                     SceneManager.LoadSceneAsync("Level2");
+                }
             }
 		}
 	}
@@ -35,3 +45,19 @@ public class DoorTransport : MonoBehaviour {
 		isStanding = false;
 	}
 }
+
+
+/*
+ * IDEA 1
+ * To move player to specific location
+ * Create a master GameObject for the doors
+ * Give each door an ID that corresponds to its target's location
+ * use the DontDestroyOnLoad function to keep master door active at all times
+ * Will simply use a script to set player location to specefied point during scene load
+ * 
+ * IDEA 2
+ * Idea for moving player to specific location 
+ * Use DontDestroyOnLoad(Player object)
+ * Set new coordinates
+ * This creates undesired clones :(
+ */
