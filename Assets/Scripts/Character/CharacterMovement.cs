@@ -64,7 +64,7 @@ public class CharacterMovement : MonoBehaviour {
             wallJumpAllowed = false;                                                    // Moving off wall so disable wall jump
             horizontalControl = false;                                                  // Disable user horizontal control
 
-            Invoke("ReEnableHorizontalControl", wallJumpTime);                                  // Re enable horizontal control after set time
+            Invoke("ReEnableHorizontalControl", wallJumpTime);                          // Re enable horizontal control after set time
 
             if (transform.localScale.x == -1f)                                          // If wall is on left side of character
             {
