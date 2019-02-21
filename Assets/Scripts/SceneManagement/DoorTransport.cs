@@ -22,7 +22,7 @@ public class DoorTransport : MonoBehaviour {
                 {
                     //target.position = new Vector3(-11.7f, -12.7f, 0);           // IDEA 2
                     //DontDestroyOnLoad(target.gameObject);                       // IDEA 2
-                    SceneManager.LoadSceneAsync("EnemyScene");
+                    SceneManager.LoadSceneAsync("Test Scene");
                 }	
 				if (SceneManager.GetActiveScene().name == "EnemyScene")
                 {
@@ -30,6 +30,12 @@ public class DoorTransport : MonoBehaviour {
                     //DontDestroyOnLoad(target.gameObject);                       // IDEA 2
                     SceneManager.LoadSceneAsync("Level2");
                 }
+				if (SceneManager.GetActiveScene().name == "Test Scene")
+				{
+					//target.position = new Vector3(20.07f, -2.35f, 0);           // IDEA 2
+					//DontDestroyOnLoad(target.gameObject);                       // IDEA 2
+					SceneManager.LoadSceneAsync("EnemyScene");
+				}
             }
 		}
 	}
