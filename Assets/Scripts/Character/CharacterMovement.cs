@@ -32,6 +32,9 @@ public class CharacterMovement : MonoBehaviour {
     // GameObject related fields
     private Animator animations;
     private Rigidbody2D rb2d;
+    private static readonly int Movement = Animator.StringToHash("Movement");
+    private static readonly int IsJumping = Animator.StringToHash("IsJumping");
+    private static readonly int OnGround = Animator.StringToHash("OnGround");
 
     // Class initialization function
     void Start()                                                                        
@@ -162,8 +165,8 @@ public class CharacterMovement : MonoBehaviour {
     // Ensures that Animation booleans are associated on each update
     void RunAnimations()                                                                
     {
-        animations.SetFloat("Movement", Mathf.Abs(moveHorizontal));
-        animations.SetBool("IsJumping", isJumping);
-        animations.SetBool("OnGround", onGround);
+        animations.SetFloat(Movement, Mathf.Abs(moveHorizontal));
+        animations.SetBool(IsJumping, isJumping);
+        animations.SetBool(OnGround, onGround);
     }
 }
