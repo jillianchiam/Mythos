@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Solid_Wall
   - PickUp
+  - Door1
+  - Door2
   layers:
   - Default
   - TransparentFX
