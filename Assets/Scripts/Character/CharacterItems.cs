@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
+/* TODO: Try fixing stuff using the ideas or code from CharacterMovement*/
+
 public class CharacterItems : MonoBehaviour {
 
     RaycastHit2D hit;
@@ -30,6 +32,8 @@ public class CharacterItems : MonoBehaviour {
 
                 if (hit.collider != null && hit.collider.tag == "PickUp")
                     picked = true;
+                    //setKinematic();
+                    //hit.collider.GetComponent<Rigidbody2D>().isKinematic = true;
             }
             else if (!Physics2D.OverlapPoint(holdpoint.position, notPicked) && !onVerticalSurface)
             {
@@ -37,6 +41,8 @@ public class CharacterItems : MonoBehaviour {
 
                 if (hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
                     hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x, 0.45f) * throwForce;
+                    //setKinematic();
+                    //hit.collider.GetComponent<Rigidbody2D>().isKinematic = false;
             }
         }
 
@@ -46,6 +52,25 @@ public class CharacterItems : MonoBehaviour {
             else
                 hit.collider.gameObject.transform.position = holdpoint.position;                                                                                    // Hold it in holdpoint position
     }
+
+    //void SimulateProjectile()
+    //{
+        //float projectile_throw = distance / (Mathf.Sin(2 * transform.localScale.x * Mathf.Deg2Rad) / gravity); // Calculate the velocity needed to throw object to the target
+       // Projectile.position = holdpoint.position + new Vector3(0, 0.0f, 0);         // Move projectile to the position of throwing object.
+
+    //}
+
+    //void setKinematic()            //prevent picked object from sliding down
+    //{
+    //  if (!picked)
+    //    {
+    //        rb.isKinematic = false;
+    //    } else
+    //    {
+    //        rb.isKinematic = true;
+    //    }
+    //}
+
 
     void OnDrawGizmos()
     {

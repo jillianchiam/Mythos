@@ -96,7 +96,7 @@ public class CharacterMovement : MonoBehaviour {
         if (rb2d.velocity.y < 0 && !onGround)                                           // Check if falling and airborne
             rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);    // Apply greater froce to reduce floaty feeling
         else if (rb2d.velocity.y > 0 && !Input.GetButton("Jump") && !onGround)          // Check if jump has been let go
-            rb2d.AddForce(Vector2.up * gravity * (lowJumpMultiplier) * Time.deltaTime); // Apply a greater downwards force to decrease rise faster
+            rb2d.AddForce(Vector2.up * gravity * (lowJumpMultiplier) * Time.deltaTime); // Apply a greater downwards force to decrease rise faster 
     }
     
     // Updates booleans to allow proper jump type
