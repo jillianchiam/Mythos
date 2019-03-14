@@ -75,12 +75,12 @@ public class CharacterItems : MonoBehaviour {
         {
             if(rb2d.velocity.y < 0)
             {
-                rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);
+                rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);    //adding force when its going up
                 goingDown = true;
             } else if (rb2d.velocity.y > 0)
             {
-                rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime);
-            } else if (goingDown && rb2d.velocity.y == 0)
+                rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime); //falls with less floaty-ness
+            } else if (goingDown && rb2d.velocity.y == 0)                                   // on the ground
             {
                 airborne = false;
                 goingDown = false;
