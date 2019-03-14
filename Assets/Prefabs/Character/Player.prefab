@@ -130,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1217967800326728}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.05, y: -13.05, z: 0}
+  m_LocalPosition: {x: 0.05, y: -2.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4592790203338328}
@@ -287,6 +287,8 @@ MonoBehaviour:
   distance: 2
   holdDist: 2
   throwForce: 30
+  fallMultiplier: 0.01
+  lowFallMultiplier: 0.003
 --- !u!114 &114406414544956912
 MonoBehaviour:
   m_ObjectHideFlags: 1

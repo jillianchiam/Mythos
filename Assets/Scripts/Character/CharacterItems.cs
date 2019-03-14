@@ -21,6 +21,20 @@ public class CharacterItems : MonoBehaviour {
     [SerializeField] private float distance = 2f;
     [SerializeField] private float holdDist = 2f;
     [SerializeField] private float throwForce;
+    [SerializeField] private float fallMultiplier = 600f;
+    [SerializeField] private float lowFallMultiplier = 300f;
+    private float gravity;
+    bool airborne;
+    bool goingDown;
+    private Rigidbody2D rb2d;
+
+    void Start()
+    {
+        //rb2d = GameObject.Find("Boomerang").GetComponent<Rigidbody2D>();
+        airborne = false;
+        goingDown = false;
+        gravity = Physics2D.gravity.y;
+    }
 	
 	void FixedUpdate () {
 		if (Input.GetKeyDown(KeyCode.J))
@@ -31,7 +45,13 @@ public class CharacterItems : MonoBehaviour {
                 hit = Physics2D.Raycast(transform.position, Vector2.right * transform.localScale.x, distance);
 
                 if (hit.collider != null && hit.collider.tag == "PickUp")
+                {
+                    rb2d = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                    airborne = false;
                     picked = true;
+                    goingDown = false;
+                }
+                    
                     //setKinematic();
                     //hit.collider.GetComponent<Rigidbody2D>().isKinematic = true;
             }
@@ -40,9 +60,30 @@ public class CharacterItems : MonoBehaviour {
                 picked = false;
 
                 if (hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+                {
+                    airborne = true;
                     hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x, 0.45f) * throwForce;
+                } 
+                   
+         
                     //setKinematic();
                     //hit.collider.GetComponent<Rigidbody2D>().isKinematic = false;
+            }
+        }
+
+        if (airborne)
+        {
+            if(rb2d.velocity.y < 0)
+            {
+                rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);
+                goingDown = true;
+            } else if (rb2d.velocity.y > 0)
+            {
+                rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime);
+            } else if (goingDown && rb2d.velocity.y == 0)
+            {
+                airborne = false;
+                goingDown = false;
             }
         }
 
@@ -53,25 +94,25 @@ public class CharacterItems : MonoBehaviour {
                 hit.collider.gameObject.transform.position = holdpoint.position;                                                                                    // Hold it in holdpoint position
     }
 
-    //void SimulateProjectile()
-    //{
-        //float projectile_throw = distance / (Mathf.Sin(2 * transform.localScale.x * Mathf.Deg2Rad) / gravity); // Calculate the velocity needed to throw object to the target
-       // Projectile.position = holdpoint.position + new Vector3(0, 0.0f, 0);         // Move projectile to the position of throwing object.
+    /*void SimulateProjectile()
+    {
+        float projectile_throw = distance / (Mathf.Sin(2 * transform.localScale.x * Mathf.Deg2Rad) / gravity); // Calculate the velocity needed to throw object to the target
+        Projectile.position = holdpoint.position + new Vector3(0, 0.0f, 0);         // Move projectile to the position of throwing object.
 
     //}
 
     //void setKinematic()            //prevent picked object from sliding down
     //{
-    //  if (!picked)
-    //    {
-    //        rb.isKinematic = false;
-    //    } else
-    //    {
-    //        rb.isKinematic = true;
-    //    }
-    //}
+     // if (!picked)
+     //   {
+     //       rb.isKinematic = false;
+     //   } else
+     //   {
+            rb.isKinematic = true;
+     //   }
+   // }
 
-
+    */
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

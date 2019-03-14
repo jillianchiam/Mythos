@@ -479,7 +479,22 @@ Prefab:
     - target: {fileID: 114362995510601432, guid: 8d9c4fdb874e4b840b99219d039f44b3,
         type: 2}
       propertyPath: throwForce
-      value: 10
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 114362995510601432, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: fallMultiplier
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 50586505895438282, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114362995510601432, guid: 8d9c4fdb874e4b840b99219d039f44b3,
+        type: 2}
+      propertyPath: lowFallMultiplier
+      value: 0.003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8d9c4fdb874e4b840b99219d039f44b3, type: 2}
