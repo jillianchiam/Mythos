@@ -10,6 +10,7 @@ TagManager:
   - PickUp
   - Door1
   - Door2
+  - Danger
   layers:
   - Default
   - TransparentFX
@@ -58,4 +59,13 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 3240895325
+    locked: 0
+  - name: CameraBack
+    uniqueID: 79753665
+    locked: 0
+  - name: CameraMid
+    uniqueID: 3881223
+    locked: 0
+  - name: CameraFore
+    uniqueID: 853839331
     locked: 0
