@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMoveset : MonoBehaviour {
-    [SerializeField] private float xOffset = 0.59f;
+public class CharacterMoveset : MonoBehaviour
+{
+    [SerializeField] private float xOffset = 3f;
     [SerializeField] private float yOffset = 0.72f;
+    [SerializeField] private float cooldown = 0.5f;
 
-    void Start () {
-        //rb2d = GetComponent<Rigidbody2D>();                                                                               // Can use in other functions if recoil effect on character is desired
-    }
-	
-	// Update is called once per frame
-	void Update () {
+    private bool mainProjRefreshing = false;
+
+    // Update is called once per frame
+    void Update()
+    {
         if (Input.GetButtonDown("Fire1"))                                                                                   // If key is pressed execute code to fire a projectile
-            FireProjectile();
+        {
+            if (!mainProjRefreshing)
+            {
+                mainProjRefreshing = true;                                                                                  // Block from firing another projectile immediately
+                FireProjectile();                                                                                           // Fire the projectile
+                Invoke("MainProjectileRefreshed", cooldown);                                                                // Activate the cooldown so that another can be fired later
+            }
+        }
     }
 
     void FireProjectile()
@@ -32,5 +40,10 @@ public class CharacterMoveset : MonoBehaviour {
         }
 
         projectile.SetActive(true);                                                                                         // Set state to active so that projectile appears on screen
+    }
+
+    void MainProjectileRefreshed()
+    {
+        mainProjRefreshing = false;                                                                                         // Re enable projectile fire
     }
 }
