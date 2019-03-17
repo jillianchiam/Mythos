@@ -44,13 +44,13 @@ public class AIMovement : MonoBehaviour {
                 walking = true;                                                                 // Player in sight so set walking boolean true
 
                 if (player.transform.position.x < transform.position.x && 
-                    animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))                         // Player on left side
+                    animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))              // Player on left side
                 {
                     transform.localScale = new Vector3(1, 1, 1) * scaleFactor;                  // Enemy hand on left side
                     rb2d.velocity = new Vector2(-speed, rb2d.velocity.y);                       // Move left towards player
                 }
                 else if (player.transform.position.x > transform.position.x && 
-                    animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))                    // Player on right side
+                    animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))              // Player on right side
                 {
                     transform.localScale = new Vector3(-1, 1, 1) * scaleFactor;                 // Enemy hand on right side
                     rb2d.velocity = new Vector2(speed, rb2d.velocity.y);                        // Move right towards player
@@ -97,7 +97,7 @@ public class AIMovement : MonoBehaviour {
 
         foreach (RaycastHit2D hit in hits)                                                      // Check each hit until player is found or end of list is reached
         {
-            if (hit.transform.tag == "Enemy" || hit.transform.tag == "PickUp")                  // Ignore enemies own colliders and other enemies
+            if (hit.transform.tag == "Danger" || hit.transform.tag == "PickUp")                  // Ignore enemies own colliders and other enemies
                 continue;
             
             if (hit.transform.tag != "Player")                                                  // Something between player and enemy
