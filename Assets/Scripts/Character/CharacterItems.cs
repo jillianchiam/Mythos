@@ -49,13 +49,12 @@ public class CharacterItems : MonoBehaviour
                 if (hit.collider != null && hit.collider.tag == "PickUp")
                 {
                     rb2d = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                    rb2d.gravityScale = 0;  // Cancel gravity on object when picked up
+                    rb2d.mass = 0;          // Get rid of any mass so it doesnt impact force or velocity physics
                     airborne = false;
                     picked = true;
                     goingDown = false;
                 }
-
-                //setKinematic();
-                //hit.collider.GetComponent<Rigidbody2D>().isKinematic = true;
             }
             else if (!Physics2D.OverlapPoint(holdpoint.position, notPicked) && !onVerticalSurface)
             {
@@ -64,12 +63,10 @@ public class CharacterItems : MonoBehaviour
                 if (hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
                 {
                     airborne = true;
+                    rb2d.gravityScale = 5;  // Player has gravity scale of 5 so match that
+                    rb2d.mass = 1;          // Reset the objects mass to 1 so that forces now impact it
                     hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x, 0.45f) * throwForce;
                 }
-
-
-                //setKinematic();
-                //hit.collider.GetComponent<Rigidbody2D>().isKinematic = false;
             }
         }
 
@@ -98,25 +95,6 @@ public class CharacterItems : MonoBehaviour
                 hit.collider.gameObject.transform.position = holdpoint.position;                                                                                    // Hold it in holdpoint position
     }
 
-    /*void SimulateProjectile()
-    {
-        float projectile_throw = distance / (Mathf.Sin(2 * transform.localScale.x * Mathf.Deg2Rad) / gravity); // Calculate the velocity needed to throw object to the target
-        Projectile.position = holdpoint.position + new Vector3(0, 0.0f, 0);         // Move projectile to the position of throwing object.
-
-    //}
-
-    //void setKinematic()            //prevent picked object from sliding down
-    //{
-     // if (!picked)
-     //   {
-     //       rb.isKinematic = false;
-     //   } else
-     //   {
-            rb.isKinematic = true;
-     //   }
-   // }
-
-    */
     void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
