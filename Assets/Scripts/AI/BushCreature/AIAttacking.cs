@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIAttacking : MonoBehaviour {
-
-    [SerializeField] private float radius;                                                      // Radius of circle collider
+    
     [SerializeField] private Vector2 liftVelocity;                                              // liftoff velocity
-    [SerializeField] private float fallMultiplier = 600f;
-    [SerializeField] private float lowFallMultiplier = 300f;
+    [SerializeField] private float fallMultiplier = 600f;                                       // Downwards physics multiplier
+    [SerializeField] private float lowFallMultiplier = 300f;                                    // Downwards physics smoother
 
     private GameObject attackRangeObject;                                                       // To hold child gameobject reference
     private CircleCollider2D attackRange;                                                       // CircleCollider -> Is a child of the enemy gameobject
@@ -15,6 +14,7 @@ public class AIAttacking : MonoBehaviour {
     public bool playerInRange;                                                                  // True if player is in AttackRange collider
     private bool attacking;                                                                     // True if enemy should try to attack
     private bool directionSet;                                                                  // Has direction been decided yet
+    private bool stopPhysics;                                                                   // End velocity settings if colliding
 
     private Rigidbody2D rb2d;                                                                   // Enemy's rigidbody
     private Animator animations;                                                                // Enemy's animations
@@ -32,9 +32,9 @@ public class AIAttacking : MonoBehaviour {
         attackRange = attackRangeObject.GetComponent<CircleCollider2D>();                       // Attach child's collider  to a variable
         rb2d = GetComponent<Rigidbody2D>();                                                     // Get the enemies rigidbody
         animations = GetComponent<Animator>();                                                  // Attach the animations to the player
-        attackRange.radius = radius;                                                            // Apply defined radius to FOV Collider
         player = GameObject.Find("Player").transform;                                           // Get a reference to the player transform
         playerInRange = false;                                                                  // Initialize to false since player not in range
+        stopPhysics = false;
         scaleFactor = transform.localScale.x;
         gravity = Physics2D.gravity.y;
     }
@@ -65,18 +65,21 @@ public class AIAttacking : MonoBehaviour {
             }
             else if (aniStateInfo.IsName("landing"))
             {
-                if (liftVelocity.x < 0)
-                    liftVelocity = new Vector2(-liftVelocity.x, liftVelocity.y);                // Return velocity's x component to positive value
-
-                rb2d.gravityScale = 50;                                                         // Reset gravity scale
-                attacking = false;                                                              // Done jumping
-                directionSet = false;                                                           // Allow direction to be computed next jump
+                ParameterReset();                                                               // Reset boolean logic and rigidbody settings
                 this.gameObject.GetComponent<AIMovement>().awake = true;
             }
         }
     }
 
-    void GetProperDirection()
+    void ParameterReset()
+    {
+        rb2d.gravityScale = 50;                                                                 // Reset gravity scale
+        attacking = false;                                                                      // Done jumping
+        directionSet = false;                                                                   // Allow direction to be computed next jump
+        stopPhysics = false;                                                                    // Allow reapplication of physics for next jump
+    }
+
+    void GetProperDirection ()
     {
         if (player.transform.position.x < transform.position.x)                                 // Player on left side
         {
@@ -102,19 +105,23 @@ public class AIAttacking : MonoBehaviour {
 
     void ApplyPhysics()
     {
-        rb2d.velocity = new Vector2(liftVelocity.x, rb2d.velocity.y);
+        if (!stopPhysics)
+            rb2d.velocity = new Vector2(liftVelocity.x, rb2d.velocity.y);                       // Only apply if not colliding with anything
+
         if (rb2d.velocity.y < 0)
-        {
-            rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);    //adding force when its going up
-        }
+            rb2d.AddForce(Vector2.up * gravity * (fallMultiplier) * Time.deltaTime);            // Adding force when its going up
         else if (rb2d.velocity.y > 0)
-        {
-            rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime); //falls with less floaty-ness
-        }
+            rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime);         // Falls with less floaty-ness
     }
 
     void RunAnimations ()
     {
         animations.SetBool("Attacking", attacking);
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        if (aniStateInfo.IsName("airborne"))
+            stopPhysics = true;
     }
 }

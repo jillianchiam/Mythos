@@ -282,7 +282,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 100
+  m_Radius: 50
 --- !u!114 &490695784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,7 +1540,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldOfView: {fileID: 490695783}
-  radius: 100
   speed: 4.74
   angleOfSight: 90
   playerInRange: 0
@@ -1571,7 +1570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da5698b08ceabcb4c8c10f1c8f3e9128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 25
   liftVelocity: {x: 15, y: 10}
   fallMultiplier: 600
   lowFallMultiplier: 300

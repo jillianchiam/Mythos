@@ -5,7 +5,6 @@ using UnityEngine;
 public class AIMovement : MonoBehaviour {
 
     [SerializeField] private CircleCollider2D fieldOfView;                                      // CircleCollider -> Is a child of the enemy gameobject
-    [SerializeField] private float radius;                                                      // Radius of circle collider
     [SerializeField] private float speed;                                                       // Movement speed of the enemy
     [SerializeField][Range(0f, 90f)] private float angleOfSight;                                // Angle of enemy sight from horizontal
 
@@ -25,7 +24,6 @@ public class AIMovement : MonoBehaviour {
     void Start () {
         rb2d = GetComponent<Rigidbody2D>();                                                     // Get the enemies rigidbody
         animations = GetComponent<Animator>();                                                  // Attach the animations to the player
-        fieldOfView.radius = radius;                                                            // Apply defined radius to FOV Collider
         player = GameObject.Find("Player").transform;                                           // Get a reference to the player transform
         playerInRange = false;                                                                  // Initialize to false since player not in range
         scaleFactor = transform.localScale.x;
