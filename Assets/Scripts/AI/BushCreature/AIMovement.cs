@@ -11,6 +11,7 @@ public class AIMovement : MonoBehaviour {
 
     public bool playerInRange;                                                                  // True if player is in FOV collider
     private bool walking;                                                                       // True if enemy should have walking animation applied
+    public bool awake;                                                                          // Should hide and attack and then consider moving
 
     private Rigidbody2D rb2d;                                                                   // Enemy's rigidbody
     private Animator animations;                                                                // Enemy's animations
@@ -28,6 +29,7 @@ public class AIMovement : MonoBehaviour {
         player = GameObject.Find("Player").transform;                                           // Get a reference to the player transform
         playerInRange = false;                                                                  // Initialize to false since player not in range
         scaleFactor = transform.localScale.x;
+        awake = false;
     }
 	
 	void Update () {
@@ -37,7 +39,7 @@ public class AIMovement : MonoBehaviour {
     void FixedUpdate ()
     {
         // Code to process how to follow player
-        if (playerInRange)
+        if (playerInRange && awake)
         {
             if (PlayerInFieldOfView())                                                          // If player is within visible range
             {
