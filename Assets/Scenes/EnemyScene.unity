@@ -1937,7 +1937,7 @@ Prefab:
     - target: {fileID: 114406414544956912, guid: 8d9c4fdb874e4b840b99219d039f44b3,
         type: 2}
       propertyPath: poolSize
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114406414544956912, guid: 8d9c4fdb874e4b840b99219d039f44b3,
         type: 2}

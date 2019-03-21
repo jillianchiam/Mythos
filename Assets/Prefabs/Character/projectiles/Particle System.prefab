@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 10
-  objectVelocity: 20
+  objectVelocity: 30
 --- !u!198 &198448364838498830
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -152,7 +152,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1969579675
+  randomSeed: -1243480075
   InitialModule:
     serializedVersion: 3
     enabled: 1
