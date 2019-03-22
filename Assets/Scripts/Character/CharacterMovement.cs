@@ -27,7 +27,7 @@ public class CharacterMovement : MonoBehaviour {
     private bool wallJumpAllowed;
     private bool doubleJumpEnable;
     private bool verticalJumpAllowed;
-    private bool horizontalControl = true;
+    public bool horizontalControl = true;
 
     // GameObject related fields
     private Animator animations;

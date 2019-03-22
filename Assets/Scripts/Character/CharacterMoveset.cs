@@ -10,23 +10,41 @@ public class CharacterMoveset : MonoBehaviour
 
     private bool mainProjRefreshing = false;
     private float chargeCount = 0.0f;
-    private float chargeTime = 2.0f;
+    private float chargeTime = 1.5f;
 
-    // Update is called once per frame
-    void Update()
+    
+    private GameObject sprite;
+
+    // Use this for initialization
+    void Start()
+    {
+        sprite = this.gameObject.transform.GetChild(4).gameObject;
+        sprite.SetActive(false);
+    }
+
+        // Update is called once per frame
+        void Update()
     {
         if (Input.GetButton("Fire1") && chargeCount < chargeTime)               // Count time of button held down
         {
             chargeCount = chargeCount + 1 * Time.deltaTime;                     // Use delta time to properly count seconds
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = false;
         }
         else if (chargeCount >= chargeTime && Input.GetButtonUp("Fire1"))       // Charge time must be met and button must be released to fire                                                                         // After specified charge time fire the projectile
         {
             FireProjectile();                                                   // Unleash projectile
             chargeCount = 0;                                                    // Reset charge counter
+            sprite.SetActive(false);
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
+        }
+        else if (chargeCount >= chargeTime)
+        {
+            sprite.SetActive(true);
         }
         else if (Input.GetButtonUp("Fire1"))                                    // Button released but not charged enough
         {
             chargeCount = 0;                                                    // Reset charge count
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
         }
         /*
         if (Input.GetButtonDown("Fire1"))                                                                                   // If key is pressed execute code to fire a projectile

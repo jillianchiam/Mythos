@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthManager : MonoBehaviour {
 
     private int maxHealth = 4;                                  // Max player health -> Needs to be equal to number of crystals
     private int currentHealth;                                  // Players current health 
-    private bool playerDead;                                    // You died if true (Hahaha you suck)
+    public bool playerDead;                                     // You died if true (Hahaha you suck)
+    private GameObject player;
 
     private List<GameObject> floatingCrystals;                  // List to hold reference to floating crystals
     private List<GameObject> brokenCrystals;                    // List to hold reference to broken cystals
 
 	// Use this for initialization
 	void Awake () {
+        player = GameObject.Find("Player");
         currentHealth = maxHealth;
         playerDead = false;
 
@@ -31,8 +34,19 @@ public class HealthManager : MonoBehaviour {
         currentHealth -= damage;                                // Apply damage value to health
 
         if (currentHealth <= 0)
-            playerDead = true;                                  // Player has died 
+        {
+            player.SetActive(false);
+            Invoke("Respawn", 1.0f);
+            currentHealth = maxHealth;
+        }
 
+        UpdateHealthBar();
+    }
+
+    void Respawn()
+    {
+        player.SetActive(true);
+        playerDead = true;                                  // Player has died 
         UpdateHealthBar();
     }
 

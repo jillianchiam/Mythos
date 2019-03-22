@@ -20,7 +20,7 @@ public class CharacterHealth : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();                                    // Attach sprite renderer to variable
         originalColor = sprite.color;                                               // Regular sprite color
         damageColor = Color.red;                                                    // Other sprite color
-        count = 0;                                                                  
+        count = 0;
     }
 	
 	// Update is called once per frame

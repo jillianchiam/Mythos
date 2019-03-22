@@ -5,8 +5,8 @@ using UnityEngine;
 public class AIAttacking : MonoBehaviour {
     
     [SerializeField] private Vector2 liftVelocity;                                              // liftoff velocity
-    [SerializeField] private float fallMultiplier = 600f;                                       // Downwards physics multiplier
-    [SerializeField] private float lowFallMultiplier = 300f;                                    // Downwards physics smoother
+    [SerializeField] private float fallMultiplier = 400f;                                       // Downwards physics multiplier
+    [SerializeField] private float lowFallMultiplier = 80f;                                    // Downwards physics smoother
 
     private GameObject attackRangeObject;                                                       // To hold child gameobject reference
     private CircleCollider2D attackRange;                                                       // CircleCollider -> Is a child of the enemy gameobject
@@ -99,7 +99,7 @@ public class AIAttacking : MonoBehaviour {
 
     void ApplyLiftoff()
     {
-        rb2d.gravityScale = 10;
+        rb2d.gravityScale = 5;
         rb2d.velocity = liftVelocity;
     }
 
