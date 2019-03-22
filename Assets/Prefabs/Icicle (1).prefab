@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4520142339323670}
   m_Layer: 0
-  m_Name: Icicle (1)
+  m_Name: Icicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
