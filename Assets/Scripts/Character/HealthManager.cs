@@ -37,7 +37,6 @@ public class HealthManager : MonoBehaviour {
         {
             player.SetActive(false);
             Invoke("Respawn", 1.0f);
-            currentHealth = maxHealth;
         }
 
         UpdateHealthBar();
@@ -45,9 +44,7 @@ public class HealthManager : MonoBehaviour {
 
     void Respawn()
     {
-        player.SetActive(true);
-        playerDead = true;                                  // Player has died 
-        UpdateHealthBar();
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     public void ApplyHeal(int heal)

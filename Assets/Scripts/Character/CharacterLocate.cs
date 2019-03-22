@@ -29,16 +29,18 @@ public class CharacterLocate : MonoBehaviour {
         PlayerPrefs.SetString("From_Loc", current.name);
         Debug.Log(PlayerPrefs.GetString("From_Loc"));
     }
-
+    /*
     // Update is called once per frame
     void Update () {
         if (healthBar.GetComponent<HealthManager>().playerDead)
         {
             healthBar.GetComponent<HealthManager>().playerDead = false;
+            
             if (SceneManager.GetActiveScene().name == "EnemyScene" && door2 && PlayerPrefs.GetString("From_Loc") == from_loc)
                 transform.position = door2.transform.position;
             else
                 transform.position = door1.transform.position;
         }
     }
+    */
 }
