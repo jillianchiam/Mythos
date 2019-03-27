@@ -11,6 +11,8 @@ public class AIAttacking : MonoBehaviour {
     private GameObject attackRangeObject;                                                       // To hold child gameobject reference
     private CircleCollider2D attackRange;                                                       // CircleCollider -> Is a child of the enemy gameobject
 
+    private int health;
+
     public bool playerInRange;                                                                  // True if player is in AttackRange collider
     private bool attacking;                                                                     // True if enemy should try to attack
     private bool directionSet;                                                                  // Has direction been decided yet
@@ -37,6 +39,7 @@ public class AIAttacking : MonoBehaviour {
         stopPhysics = false;
         scaleFactor = transform.localScale.x;
         gravity = Physics2D.gravity.y;
+        health = 3;
     }
 
     // Update is called once per frame
@@ -117,6 +120,18 @@ public class AIAttacking : MonoBehaviour {
     void RunAnimations ()
     {
         animations.SetBool("Attacking", attacking);
+    }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "PickUp")
+        {
+            health--;
+
+            if (health == 0)
+                this.gameObject.SetActive(false);
+        }
+
     }
 
     private void OnCollisionStay2D(Collision2D col)
