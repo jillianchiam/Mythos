@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIMovement : MonoBehaviour {
-
-    [SerializeField] private CircleCollider2D fieldOfView;                                      // CircleCollider -> Is a child of the enemy gameobject
+    
     [SerializeField] private float speed;                                                       // Movement speed of the enemy
-    [SerializeField][Range(0f, 90f)] private float angleOfSight;                                // Angle of enemy sight from horizontal
 
     public bool playerInRange;                                                                  // True if player is in FOV collider
     private bool walking;                                                                       // True if enemy should have walking animation applied
@@ -31,11 +29,42 @@ public class AIMovement : MonoBehaviour {
     }
 	
 	void Update () {
-        RunAnimations();                                                                        // Update animation booleans
+        RunAnimations();                                                                    // Update animation booleans
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
+        RunAnimations();
+
+        if (awake)
+        {
+            walking = true;                                                                 // Player in sight so set walking boolean true
+
+            if (player.transform.position.x < transform.position.x &&
+                animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))              // Player on left side
+            {
+                transform.localScale = new Vector3(1, 1, 1) * scaleFactor;                  // Enemy hand on left side
+                rb2d.velocity = new Vector2(-speed, rb2d.velocity.y);                       // Move left towards player
+            }
+            else if (player.transform.position.x > transform.position.x &&
+                animations.GetCurrentAnimatorStateInfo(0).IsName("walkcycle"))              // Player on right side
+            {
+                transform.localScale = new Vector3(-1, 1, 1) * scaleFactor;                 // Enemy hand on right side
+                rb2d.velocity = new Vector2(speed, rb2d.velocity.y);                        // Move right towards player
+            }
+            else
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);                            // Go stationary
+        }
+
+        else
+        {
+            walking = false;
+            awake = false;
+        }
+    }
+            
+
+        /*
         // Code to process how to follow player
         if (playerInRange && awake)
         {
@@ -106,6 +135,7 @@ public class AIMovement : MonoBehaviour {
         
         return false;                                                                           // Player is not hidden by an obstacle
     }
+    */
 
     void RunAnimations()
     {

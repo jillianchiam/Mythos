@@ -5,12 +5,19 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour {
 
     public int damageTaken;
+    public int enemiesSlain;
+
     private bool iFrameCurrent;
     private GameObject healthBar;
     private SpriteRenderer sprite;
     private Color originalColor;
     private Color damageColor;
     private int count;
+
+    private float chargeCount = 0.0f;
+    private float chargeTime = 2.0f;
+
+    private GameObject heal;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +28,9 @@ public class CharacterHealth : MonoBehaviour {
         originalColor = sprite.color;                                               // Regular sprite color
         damageColor = Color.red;                                                    // Other sprite color
         count = 0;
+
+        heal = this.gameObject.transform.GetChild(5).gameObject;
+        heal.SetActive(false);
     }
 	
 	// Update is called once per frame
@@ -32,7 +42,29 @@ public class CharacterHealth : MonoBehaviour {
             sprite.color = damageColor;                                             // Sprite set to show damage taken
             Invoke("InvincibilityTimer", 1.0f);                                     // Give player 1 second of immunity after taking a hit
         }
-	}
+
+        // Apply heal with charge time + heal quantity is that of enemies slain
+        if (Input.GetButton("Fire2") && chargeCount < chargeTime && enemiesSlain > 0)               // Count time of button held down
+        {
+            chargeCount = chargeCount + 1 * Time.deltaTime;                     // Use delta time to properly count seconds
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = false;
+            heal.SetActive(true);
+        }
+        else if (chargeCount >= chargeTime)                                     // Charge time must be met and button must be released to fire
+        {
+            enemiesSlain--;
+            chargeCount = 0;                                                    // Reset charge counter
+            heal.SetActive(false);
+            healthBar.GetComponent<HealthManager>().ApplyHeal(1);
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
+        }
+        else if (Input.GetButtonUp("Fire2"))                                    // Button released but not charged enough
+        {
+            chargeCount = 0;                                                    // Reset charge count
+            this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
+            heal.SetActive(false);
+        }
+    }
 
     void FixedUpdate ()
     {

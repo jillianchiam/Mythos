@@ -14,6 +14,8 @@ public class BodyCollider : MonoBehaviour {
 
         else if (col.gameObject.tag == "Danger")
             this.transform.parent.GetComponent<CharacterHealth>().damageTaken = 1;
+        else if (col.gameObject.tag == "Danger2")
+            this.transform.parent.GetComponent<CharacterHealth>().damageTaken = 2;
     }
     private void OnCollisionExit2D(Collision2D col)
     {
@@ -23,7 +25,7 @@ public class BodyCollider : MonoBehaviour {
             this.transform.parent.GetComponent<CharacterItems>().onVerticalSurface = false;
         }
 
-        else if (col.gameObject.tag == "Danger")
+        else if (col.gameObject.tag == "Danger" || col.gameObject.tag == "Danger2")
             this.transform.parent.GetComponent<CharacterHealth>().damageTaken = 0;
     }
 }

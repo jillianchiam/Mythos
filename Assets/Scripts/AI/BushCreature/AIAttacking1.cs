@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIAttacking : MonoBehaviour {
-    
+public class AIAttacking1 : MonoBehaviour
+{
+
     [SerializeField] private Vector2 liftVelocity;                                              // liftoff velocity
     [SerializeField] private float fallMultiplier = 400f;                                       // Downwards physics multiplier
     [SerializeField] private float lowFallMultiplier = 80f;                                    // Downwards physics smoother
@@ -45,7 +46,7 @@ public class AIAttacking : MonoBehaviour {
         stopPhysics = false;
         scaleFactor = transform.localScale.x;
         gravity = Physics2D.gravity.y;
-        
+
         sprite = GetComponent<SpriteRenderer>();                                    // Attach sprite renderer to variable
         originalColor = sprite.color;                                               // Regular sprite color
         damageColor = Color.red;                                                    // Other sprite color
@@ -66,11 +67,12 @@ public class AIAttacking : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         RunAnimations();                                                                        // Update animation parameters
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         if (iFrameCurrent)                                                          // iFrames are present when damage was taken
         {
@@ -93,7 +95,7 @@ public class AIAttacking : MonoBehaviour {
             attacking = true;                                                                   // Start the attack
 
         if (attacking)
-        {             
+        {
             if (aniStateInfo.IsName("liftoff"))
             {
                 if (!directionSet)                                                              // Only want to run this function once
@@ -107,7 +109,7 @@ public class AIAttacking : MonoBehaviour {
             else if (aniStateInfo.IsName("landing"))
             {
                 ParameterReset();                                                               // Reset boolean logic and rigidbody settings
-                this.gameObject.GetComponent<AIMovement>().awake = true;
+                this.gameObject.GetComponent<AIMovement1>().awake = true;
             }
         }
     }
@@ -120,14 +122,14 @@ public class AIAttacking : MonoBehaviour {
         stopPhysics = false;                                                                    // Allow reapplication of physics for next jump
     }
 
-    void GetProperDirection ()
+    void GetProperDirection()
     {
         if (player.transform.position.x < transform.position.x)                                 // Player on left side
         {
             transform.localScale = new Vector3(1, 1, 1) * scaleFactor;                          // Enemy hand on left side
             if (liftVelocity.x > 0)
                 liftVelocity = new Vector2(-liftVelocity.x, liftVelocity.y);                    // Flip velocity's x component so it goes left
-        }       
+        }
         else if (player.transform.position.x > transform.position.x)                            // Player on right side
         {
             transform.localScale = new Vector3(-1, 1, 1) * scaleFactor;                         // Enemy hand on right side
@@ -155,7 +157,7 @@ public class AIAttacking : MonoBehaviour {
             rb2d.AddForce(Vector2.up * gravity * (lowFallMultiplier) * Time.deltaTime);         // Falls with less floaty-ness
     }
 
-    void RunAnimations ()
+    void RunAnimations()
     {
         animations.SetBool("Attacking", attacking);
     }
@@ -175,7 +177,6 @@ public class AIAttacking : MonoBehaviour {
                 GameObject.Find("Player").GetComponent<CharacterHealth>().enemiesSlain++;
                 this.gameObject.SetActive(false);
             }
-                
         }
 
     }

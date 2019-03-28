@@ -6,11 +6,9 @@ public class CharacterMoveset : MonoBehaviour
 {
     [SerializeField] private float xOffset = 3f;
     [SerializeField] private float yOffset = 0.72f;
-    [SerializeField] private float cooldown = 0.5f;
-
-    private bool mainProjRefreshing = false;
+    
     private float chargeCount = 0.0f;
-    private float chargeTime = 1.5f;
+    private float chargeTime = 1.0f;
 
     private GameObject charge;
 
@@ -61,10 +59,5 @@ public class CharacterMoveset : MonoBehaviour
         }
 
         projectile.SetActive(true);                                                                                         // Set state to active so that projectile appears on screen
-    }
-
-    void MainProjectileRefreshed()
-    {
-        mainProjRefreshing = false;                                                                                         // Re enable projectile fire
     }
 }
