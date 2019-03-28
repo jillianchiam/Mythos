@@ -5,7 +5,7 @@ using UnityEngine;
 public class Camera2DFollow : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private float yOffset = 0f;
+    [SerializeField] private float yOffset = 7f;
 
     // Use this for initialization
     void Start () {
@@ -14,7 +14,18 @@ public class Camera2DFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        transform.position = new Vector3(target.position.x, target.position.y + yOffset, -10);
+        /*if (target.position.x >= 35f && target.position.x <= 42f && target.position.y >= -3f)
+        {
+            this.gameObject.GetComponent<Camera>().orthographicSize = 200f;
+            transform.position = new Vector3(target.position.x + 10, target.position.y + yOffset, -10);
+        }
+
+        this.gameObject.GetComponent<Camera>().orthographicSize = 10f;
+    */    
+        if (Input.GetAxis("Vertical") < -0.1)
+            transform.position = new Vector3(target.position.x, target.position.y -6, -10);
+        else
+            transform.position = new Vector3(target.position.x, target.position.y + yOffset, -10);
     }
 }
 
