@@ -29,6 +29,7 @@ public class CharacterMoveset : MonoBehaviour
         {
             chargeCount = chargeCount + 1 * Time.deltaTime;                     // Use delta time to properly count seconds
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = false;
+            sprite.SetActive(true);
         }
         else if (chargeCount >= chargeTime && Input.GetButtonUp("Fire1"))       // Charge time must be met and button must be released to fire                                                                         // After specified charge time fire the projectile
         {
@@ -37,14 +38,15 @@ public class CharacterMoveset : MonoBehaviour
             sprite.SetActive(false);
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
         }
-        else if (chargeCount >= chargeTime)
+        /*else if (chargeCount >= chargeTime)
         {
             sprite.SetActive(true);
-        }
+        }*/
         else if (Input.GetButtonUp("Fire1"))                                    // Button released but not charged enough
         {
             chargeCount = 0;                                                    // Reset charge count
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
+            sprite.SetActive(false);
         }
         /*
         if (Input.GetButtonDown("Fire1"))                                                                                   // If key is pressed execute code to fire a projectile
