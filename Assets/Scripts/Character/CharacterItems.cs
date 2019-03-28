@@ -65,7 +65,7 @@ public class CharacterItems : MonoBehaviour
                     airborne = true;
                     rb2d.gravityScale = 5;  // Player has gravity scale of 5 so match that
                     rb2d.mass = 1;          // Reset the objects mass to 1 so that forces now impact it
-                    hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x, 0.45f) * throwForce;
+                    hit.collider.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.localScale.x, 0.5f) * throwForce;
                 }
             }
         }

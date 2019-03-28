@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeTime: 10
-  objectVelocity: 30
+  objectVelocity: 25
 --- !u!198 &198448364838498830
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -12,14 +12,13 @@ public class CharacterMoveset : MonoBehaviour
     private float chargeCount = 0.0f;
     private float chargeTime = 1.5f;
 
-    
-    private GameObject sprite;
+    private GameObject charge;
 
     // Use this for initialization
     void Start()
     {
-        sprite = this.gameObject.transform.GetChild(4).gameObject;
-        sprite.SetActive(false);
+        charge = this.gameObject.transform.GetChild(4).gameObject;
+        charge.SetActive(false);
     }
 
         // Update is called once per frame
@@ -29,36 +28,21 @@ public class CharacterMoveset : MonoBehaviour
         {
             chargeCount = chargeCount + 1 * Time.deltaTime;                     // Use delta time to properly count seconds
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = false;
-            sprite.SetActive(true);
+            charge.SetActive(true);
         }
-        else if (chargeCount >= chargeTime && Input.GetButtonUp("Fire1"))       // Charge time must be met and button must be released to fire                                                                         // After specified charge time fire the projectile
+        else if (chargeCount >= chargeTime && Input.GetButtonUp("Fire1"))       // Charge time must be met and button must be released to fire
         {
             FireProjectile();                                                   // Unleash projectile
             chargeCount = 0;                                                    // Reset charge counter
-            sprite.SetActive(false);
+            charge.SetActive(false);
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
         }
-        /*else if (chargeCount >= chargeTime)
-        {
-            sprite.SetActive(true);
-        }*/
         else if (Input.GetButtonUp("Fire1"))                                    // Button released but not charged enough
         {
             chargeCount = 0;                                                    // Reset charge count
             this.gameObject.GetComponent<CharacterMovement>().horizontalControl = true;
-            sprite.SetActive(false);
+            charge.SetActive(false);
         }
-        /*
-        if (Input.GetButtonDown("Fire1"))                                                                                   // If key is pressed execute code to fire a projectile
-        {
-            if (!mainProjRefreshing)
-            {
-                mainProjRefreshing = true;                                                                                  // Block from firing another projectile immediately
-                FireProjectile();                                                                                           // Fire the projectile
-                Invoke("MainProjectileRefreshed", cooldown);                                                                // Activate the cooldown so that another can be fired later
-            }
-        }
-        */
     }
 
     void FireProjectile()

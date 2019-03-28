@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float activeTime = 10f;
-    [SerializeField] private float objectVelocity = 20f;
+    [SerializeField] private float objectVelocity = 25f;
 
     private float velocity;
     private Rigidbody2D rb2d;
@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag != "Player" && col.gameObject.tag != "PickUp")           // If it hits anything other than the player or a pickup item
+        if (col.gameObject.tag != "Player")                                             // If it hits anything other than the player
             gameObject.SetActive(false);                                                // Projectile disappears
     }
 }

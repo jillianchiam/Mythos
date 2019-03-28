@@ -45,20 +45,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Background
-    uniqueID: 942588181
+  - name: Tiles
+    uniqueID: 1079090519
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 942588181
+    locked: 0
   - name: Middleground
     uniqueID: 931871285
     locked: 0
-  - name: Player
-    uniqueID: 3190679773
-    locked: 0
   - name: Foreground
     uniqueID: 3240895325
+    locked: 0
+  - name: Player
+    uniqueID: 3190679773
     locked: 0
   - name: CameraBack
     uniqueID: 79753665
