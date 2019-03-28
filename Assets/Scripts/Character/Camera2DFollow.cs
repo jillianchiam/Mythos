@@ -14,18 +14,23 @@ public class Camera2DFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        /*if (target.position.x >= 35f && target.position.x <= 42f && target.position.y >= -3f)
+        if (target.position.x >= 35f && target.position.x <= 42f && target.position.y >= -3f)
         {
-            this.gameObject.GetComponent<Camera>().orthographicSize = 200f;
+            this.gameObject.GetComponent<Camera>().orthographicSize = 25f;
             transform.position = new Vector3(target.position.x + 10, target.position.y + yOffset, -10);
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
-
-        this.gameObject.GetComponent<Camera>().orthographicSize = 10f;
-    */    
-        if (Input.GetAxis("Vertical") < -0.1)
-            transform.position = new Vector3(target.position.x, target.position.y -6, -10);
+        else if (Input.GetAxis("Vertical") < -0.1)
+        {
+            transform.position = new Vector3(target.position.x, target.position.y - 6, -10);
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }
         else
+        {
+            this.gameObject.GetComponent<Camera>().orthographicSize = 10f;
             transform.position = new Vector3(target.position.x, target.position.y + yOffset, -10);
+            this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 }
 
